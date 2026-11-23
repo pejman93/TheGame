@@ -1,3 +1,4 @@
+import { clean } from "./text";
 import type { ChatStep, GameScript } from "./types";
 
 export const secretAdmirer: GameScript = {
@@ -53,6 +54,34 @@ export const secretAdmirer: GameScript = {
           "Clue #3: Today I'm thinking about you more than any other day.",
         ],
         cutText: "Connection lost",
+      },
+      {
+        type: "news",
+        variant: "normal",
+        channel: "TGN NEWS",
+        headline: `Secret admirer spotted near ${n}`,
+        subhead: "Police release blurry photo of the suspect",
+        label: "SUSPECT",
+        picture: "suspect",
+        lines: [
+          "This just in.",
+          `A secret admirer has been spotted near ${n}.`,
+          "Police have released this blurry photo of the suspect.",
+          "The suspect is described as charming, mysterious… and very interested in birthdays.",
+          ...cfg.jokes.slice(0, 1).map((j) => `The suspect also knows this: ${clean(j)}.`),
+          `${n}, if you know who this is… please, stay calm.`,
+        ],
+        ticker: [
+          "SUSPECT LAST SEEN BUYING BALLOONS",
+          ...cfg.jokes.map((j) => `SUSPECT KNOWS: "${j.toUpperCase()}"`),
+          "HEARTS RACING ACROSS THE CITY",
+          "INVESTIGATION ONGOING",
+        ],
+        poll: {
+          question: "LIVE POLL: Who could it be?",
+          options: ["No idea 😳", "I have a guess 👀"],
+          result: "Investigation ongoing.",
+        },
       },
       {
         type: "chat",

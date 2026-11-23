@@ -1,3 +1,4 @@
+import { clean } from "./text";
 import type { GameScript } from "./types";
 
 export const theHaunting: GameScript = {
@@ -51,6 +52,29 @@ export const theHaunting: GameScript = {
         variant: "haunt",
         lines: ["I SEE YOU", n.toUpperCase(), "I SEE YOU", "DON'T LOOK AWAY"],
         audio: [{ clip: "creepy", effect: "demon" }],
+      },
+      {
+        type: "news",
+        variant: "haunt",
+        channel: "CH 33",
+        headline: `Strange activity reported around ${n}`,
+        subhead: "Residents report flickering lights and candles lighting themselves",
+        label: "LIVE FROM THE SCENE",
+        picture: "photo",
+        lines: [
+          "We interrupt this broadcast with an urgent report.",
+          `Strange activity has been reported around ${n} tonight.`,
+          "Lights are flickering. Candles are lighting themselves.",
+          ...cfg.jokes.slice(0, 1).map((j) => `Witnesses also report: ${clean(j)}.`),
+          "Experts say the activity peaks once a year… on one specific day.",
+          `${n}… we can see you.`,
+        ],
+        ticker: [
+          "PARANORMAL ACTIVITY UP 3000%",
+          "DO NOT LOOK BEHIND YOU",
+          ...cfg.jokes.map((j) => `UNCONFIRMED: "${j.toUpperCase()}"`),
+          "THE CANDLES ARE LISTENING",
+        ],
       },
       {
         type: "chat",

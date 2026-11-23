@@ -34,6 +34,9 @@ finale before the birthday song. All effects run live in the browser with the We
 | 🚀 Mission Control | Coming soon | A launch that keeps failing | Lift-off into a new year |
 | 🎤 The Rigged Quiz Show | Coming soon | A host who roasts every answer | The jackpot is the surprise |
 
+Every game also has a **fake breaking-news broadcast** about the birthday person, with their photo, a news
+ticker made from your inside jokes and an anchor who says their name out loud.
+
 Every game takes 3–5 minutes, has a hidden 🎈 "skip to the surprise" button, and always ends happy.
 
 ## Tech
@@ -89,5 +92,5 @@ docs/DESIGN.md             product design and roadmap
 
 ### Adding a new game
 Write a script in `games/` that returns a list of stages (gate, chat, terms, loading, captcha, glitch,
-blackout, candles, reveal, finale-gate, finale), register it in `games/index.ts`, and set `available: true`
+news, blackout, candles, reveal, finale-gate, finale), register it in `games/index.ts`, and set `available: true`
 in `lib/games.ts`.

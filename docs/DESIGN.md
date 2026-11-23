@@ -28,6 +28,7 @@ long-lasting "you've been hacked" panic. There is always a hidden way to skip st
 | loading | Endless loading bar: 99%, "Recalculating…", back down, then done. |
 | captcha | "Select all images of {name} being dramatic", using the sender's photos. Always fails twice. |
 | glitch | Full-screen breakdown with distorted voice, static and vibration. |
+| news | Fake breaking-news broadcast about the birthday person: fictional channel, LIVE badge, their photo "on the scene", headline bar, ticker built from inside jokes, a news jingle, an anchor voice (the device's built-in text-to-speech) with captions, and an optional live poll. The Haunting's version ends with the anchor's voice dropping deep and slow; Secret Admirer shows the blurred "suspect". |
 | blackout | Black screen, silence, then a whisper. |
 | candles | Light the candles, make a wish, they blow out. |
 | reveal | Blurred photo with clues, then "connection lost". |

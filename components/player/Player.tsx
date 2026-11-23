@@ -16,6 +16,7 @@ import { Candles } from "./stages/Candles";
 import { Reveal } from "./stages/Reveal";
 import { FinaleGate } from "./stages/FinaleGate";
 import { Finale } from "./stages/Finale";
+import { News } from "./stages/News";
 
 export function Player({ cfg, preview }: { cfg: SurpriseConfig; preview: boolean }) {
   const audioRef = useRef<AudioEngine | null>(null);
@@ -140,6 +141,8 @@ function renderStage(stage: Stage, p: Common) {
       return <Reveal stage={stage} {...p} />;
     case "finale-gate":
       return <FinaleGate stage={stage} {...p} />;
+    case "news":
+      return <News stage={stage} {...p} />;
     case "finale":
       return <Finale stage={stage} {...p} />;
   }

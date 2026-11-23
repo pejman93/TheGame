@@ -34,6 +34,22 @@ export type Stage =
   | { type: "blackout"; text?: string }
   | { type: "candles"; count: number }
   | { type: "reveal"; title: string; clues: string[]; cutText: string }
+  | {
+      type: "news";
+      /** "haunt": darker broadcast, and the anchor's last line drops into a slow, deep voice. */
+      variant: "normal" | "haunt";
+      channel: string;
+      headline: string;
+      subhead: string;
+      /** Corner label on the picture, e.g. "ON THE SCENE" or "SUSPECT". */
+      label: string;
+      /** "photo": the first photo as is. "suspect": the first photo heavily blurred. */
+      picture: "photo" | "suspect";
+      /** What the anchor says, one line at a time. */
+      lines: string[];
+      ticker: string[];
+      poll?: { question: string; options: string[]; result: string };
+    }
   | { type: "finale-gate"; icon: string; title: string; text: string; button: string }
   | { type: "finale"; headline: string; subline: string };
 

@@ -27,7 +27,8 @@ export type SfxName =
   | "heartbeat"
   | "whoosh"
   | "sparkle"
-  | "static";
+  | "static"
+  | "news";
 
 type AC = typeof AudioContext;
 
@@ -108,10 +109,12 @@ export class AudioEngine {
       this.out = out;
     }
     if (this.ctx.state === "suspended") this.ctx.resume().catch(() => {});
+    this.primeSpeech();
   }
 
   setMuted(m: boolean) {
     this.muted = m;
+    if (m) this.stopSpeech();
     if (this.out && this.ctx) this.out.gain.setTargetAtTime(m ? 0 : 0.85, this.ctx.currentTime, 0.05);
   }
 
@@ -129,6 +132,87 @@ export class AudioEngine {
     }
     this.active.clear();
     this.stopDrone();
+    this.stopSpeech();
+  }
+
+  // ---------------------------------------------------------------- speech (news anchor)
+
+  private speechPrimed = false;
+  private anchorVoice: SpeechSynthesisVoice | null = null;
+
+  private synth(): SpeechSynthesis | null {
+    return typeof window !== "undefined" && "speechSynthesis" in window ? window.speechSynthesis : null;
+  }
+
+  /** iPhones only allow speech after it was started once from a tap: speak silence then. */
+  private primeSpeech() {
+    const synth = this.synth();
+    if (!synth || this.speechPrimed) return;
+    try {
+      const u = new SpeechSynthesisUtterance(" ");
+      u.volume = 0;
+      synth.speak(u);
+      this.speechPrimed = true;
+    } catch {
+      /* not supported */
+    }
+  }
+
+  private pickVoice(): SpeechSynthesisVoice | null {
+    const voices = this.synth()?.getVoices() ?? [];
+    if (!voices.length) return null;
+    const preferred = [/daniel/i, /google uk english male/i, /arthur/i, /ryan/i, /guy/i, /aaron/i, /alex/i];
+    for (const re of preferred) {
+      const v = voices.find((x) => re.test(x.name) && x.lang.startsWith("en"));
+      if (v) return v;
+    }
+    return voices.find((x) => x.lang === "en-GB") ?? voices.find((x) => x.lang.startsWith("en")) ?? null;
+  }
+
+  /**
+   * Speak a line with the device's built-in voice. Resolves when done, and
+   * always resolves (with a time estimate) when speech is unavailable or muted.
+   */
+  speak(text: string, opts: { rate?: number; pitch?: number } = {}): Promise<void> {
+    const rate = opts.rate ?? 1;
+    const estimate = 500 + (text.length * 70) / rate;
+    const synth = this.synth();
+    if (!synth || this.muted) return sleep(estimate);
+    return new Promise((resolve) => {
+      let done = false;
+      const finish = () => {
+        if (done) return;
+        done = true;
+        clearTimeout(timer);
+        resolve();
+      };
+      const timer = setTimeout(finish, estimate + 4000);
+      try {
+        const u = new SpeechSynthesisUtterance(text);
+        this.anchorVoice = this.anchorVoice ?? this.pickVoice();
+        if (this.anchorVoice) {
+          u.voice = this.anchorVoice;
+          u.lang = this.anchorVoice.lang;
+        } else {
+          u.lang = "en-US";
+        }
+        u.rate = rate;
+        u.pitch = opts.pitch ?? 1;
+        u.onend = finish;
+        u.onerror = finish;
+        synth.speak(u);
+      } catch {
+        finish();
+      }
+    });
+  }
+
+  stopSpeech() {
+    try {
+      this.synth()?.cancel();
+    } catch {
+      /* ignore */
+    }
   }
 
   // ---------------------------------------------------------------- voice
@@ -457,6 +541,37 @@ export class AudioEngine {
       case "static":
         this.noiseBurst(t, duration, 0.12, 1200);
         break;
+      case "news": {
+        // Dramatic TV news sting: three brass stabs, a timpani hit and a held chord.
+        const midi = (m: number) => 440 * Math.pow(2, (m - 69) / 12);
+        const brass = (notes: number[], at: number, dur: number, vol: number) => {
+          for (const m of notes) {
+            const o = ctx.createOscillator();
+            const f = this.filter("lowpass", 600, 1.2);
+            const g = ctx.createGain();
+            o.type = "sawtooth";
+            o.frequency.value = midi(m);
+            f.frequency.setValueAtTime(600, at);
+            f.frequency.linearRampToValueAtTime(3200, at + 0.05);
+            f.frequency.exponentialRampToValueAtTime(900, at + dur);
+            g.gain.setValueAtTime(0.0001, at);
+            g.gain.exponentialRampToValueAtTime(vol, at + 0.02);
+            g.gain.setValueAtTime(vol, at + dur * 0.7);
+            g.gain.exponentialRampToValueAtTime(0.0001, at + dur);
+            o.connect(f).connect(g).connect(this.out!);
+            this.track(o);
+            o.start(at);
+            o.stop(at + dur + 0.05);
+          }
+        };
+        const stab = [60, 67, 72];
+        brass(stab, t, 0.14, 0.05);
+        brass(stab, t + 0.18, 0.14, 0.05);
+        brass(stab, t + 0.36, 0.14, 0.05);
+        brass([56, 63, 72, 79], t + 0.6, 1.5, 0.045);
+        this.tone(90, t + 0.6, 0.6, "sine", 0.7, 45);
+        break;
+      }
     }
   }
 

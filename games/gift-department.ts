@@ -1,3 +1,4 @@
+import { clean } from "./text";
 import type { GameScript } from "./types";
 
 export const giftDepartment: GameScript = {
@@ -76,14 +77,44 @@ export const giftDepartment: GameScript = {
       },
       { type: "captcha", prompt: `Security check: select all images of ${n} being dramatic` },
       {
+        type: "news",
+        variant: "normal",
+        channel: "TGN NEWS",
+        headline: `Local legend ${n} turns ${cfg.age ?? "one year older"}. Authorities concerned.`,
+        subhead: "Gift Department under investigation after mysterious package",
+        label: "ON THE SCENE",
+        picture: "photo",
+        lines: [
+          "Good evening. We interrupt this program with breaking news.",
+          `Local legend ${n} is turning ${cfg.age ?? "one year older"} today.`,
+          "Authorities are concerned.",
+          ...cfg.jokes.slice(0, 2).map((j) => `Witnesses report: ${clean(j)}.`),
+          "A mysterious package has been delivered in their name. Its contents remain unknown.",
+          `${n}, if you are watching this… do not close this window.`,
+          "Back to you, Gerald.",
+        ],
+        ticker: [
+          ...cfg.jokes.map((j) => `WITNESSES CONFIRM: "${j.toUpperCase()}"`),
+          "CANDLE SHORTAGE REPORTED NATIONWIDE",
+          "GIFT DEPARTMENT DECLINES TO COMMENT",
+          "SENDER IDENTITY: CLASSIFIED",
+          "CAKE PRICES SOAR",
+        ],
+        poll: {
+          question: `LIVE POLL: Is ${n} officially old now?`,
+          options: ["Yes", "Also yes"],
+          result: "100% of viewers agree.",
+        },
+      },
+      {
         type: "chat",
         variant: "chat",
         name: "Gerald",
         avatar: "🧑‍💼",
         status: "Gift Department · online",
         steps: [
-          { say: "Thank you. Verification complete. ✅" },
-          { say: "Your gift is almost ready." },
+          { say: "Sorry about that. Some… news got through. 📺" },
+          { say: "Verification complete. Your gift is almost ready." },
           { pause: 1500 },
           { say: "…" },
           { say: `${n}, can I ask you something?` },
