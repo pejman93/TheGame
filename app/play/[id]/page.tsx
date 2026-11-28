@@ -22,7 +22,17 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     title: game?.shareTitle ?? "You have a package",
     description: game?.shareDescription,
     robots: { index: false, follow: false },
-    openGraph: { title: game?.shareTitle, description: game?.shareDescription },
+    openGraph: {
+      title: game?.shareTitle,
+      description: game?.shareDescription,
+      images: [{ url: "/opengraph-image.png", width: 1200, height: 630, alt: "A black gift box with a red bow" }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: game?.shareTitle,
+      description: game?.shareDescription,
+      images: ["/opengraph-image.png"],
+    },
   };
 }
 

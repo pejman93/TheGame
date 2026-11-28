@@ -11,7 +11,15 @@ const serif = Instrument_Serif({
   display: "swap",
 });
 
+// Absolute base for link-preview images: your own domain if set, else Vercel's production address.
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:3000");
+
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: "The Game: a birthday gift with a twist",
   description:
     "Send a link that looks like a gift. It turns into a strange little game made from your photos, inside jokes and voice, and ends in the happiest birthday surprise.",

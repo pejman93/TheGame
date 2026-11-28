@@ -67,6 +67,11 @@ Without `OPENROUTER_API_KEY`, everything works and the original photos are used.
 
 Never commit API keys. They only live in Vercel's environment variables (or your local `.env.local`).
 
+## Brand assets
+- App icon (pixel-art gift box with glowing cat eyes): `public/brand/app-icon-1024.png`, the master for the
+  App Store and any other size. The browser tab, home-screen and link-preview images in `app/` are made from it.
+- Logo mark: the animated cat eyes in `components/brand/Eyes.tsx`.
+
 ## Project structure
 
 ```
