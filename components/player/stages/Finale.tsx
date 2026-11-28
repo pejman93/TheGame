@@ -51,7 +51,7 @@ export function Finale({ stage, cfg, audio }: StageProps<"finale">) {
     <div className="stage finale">
       <Confetti burst={burst} />
       <div className="finale-inner">
-        {cfg.age ? <div className="age-badge">🎂 {cfg.age}</div> : <div className="age-badge">🎂</div>}
+        <div className="age-badge">{cfg.age ? `Turning ${cfg.age}` : "Happy birthday"}</div>
         <h1 className="finale-title">{stage.headline}</h1>
         <p className="finale-sub">{stage.subline}</p>
 
@@ -85,7 +85,7 @@ export function Finale({ stage, cfg, audio }: StageProps<"finale">) {
           )}
         </div>
         <Link href="/" className="make-one">
-          Prank someone else with The Game →
+          Make one for someone you love →
         </Link>
       </div>
     </div>

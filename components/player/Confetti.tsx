@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef } from "react";
 
-const COLORS = ["#ff4d8d", "#ffd23f", "#3ee8b5", "#5aa9ff", "#b06bff", "#ff8a3d"];
+const COLORS = ["#f2c230", "#ffe08a", "#f6efe3", "#c8102e", "#ff8a3d", "#ffffff"];
 
 /** Lightweight canvas confetti. Changing `burst` fires another round. */
 export function Confetti({ burst }: { burst: number }) {

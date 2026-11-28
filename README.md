@@ -10,8 +10,8 @@ song, your photos and your message.
 ## How it works
 
 1. **Pick a game.** Each one is a different trap with a different twist.
-2. **Make it personal.** Add their name, inside jokes, up to 3 photos (each can be transformed with a prompt),
-   a voice note, an optional creepy line and your birthday message. You can also lock the link until their birthday.
+2. **Make it personal.** One question per screen: their name, a photo, your voice, a few inside jokes and your
+   birthday message. Choose whether it opens right away or on their birthday (sealed with a countdown).
 3. **Send the link.** Say nothing. 😈
 
 ### The voice arc
@@ -71,15 +71,16 @@ Never commit API keys. They only live in Vercel's environment variables (or your
 
 ```
 app/
-  page.tsx                 landing page + game picker
-  create/[game]/page.tsx   sender: personalize a game
+  page.tsx                 home page
+  create/page.tsx          sender: step-by-step creator (one question per screen)
   play/[id]/page.tsx       receiver: plays the surprise
   api/upload               stores a photo or voice clip
   api/transform            photo + prompt → new image (OpenRouter)
   api/surprise             saves a finished surprise, returns its id
   api/media/[...key]       serves local files in development
 components/
-  creator/                 form, photo slots, voice recorder
+  brand/                   logo and the animated cat-eyes mark
+  creator/                 step-by-step wizard, photo picker, mic recorder
   player/                  game engine, stages, finale, confetti
 games/                     one script per game (list of stages)
 lib/

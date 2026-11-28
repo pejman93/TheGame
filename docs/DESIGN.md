@@ -8,11 +8,22 @@ reveal with music, confetti, photos and a personal message.
 **Tone rule:** playfully weird, never truly scary or harmful. No fake bank charges, no password prompts, no
 long-lasting "you've been hacked" panic. There is always a hidden way to skip straight to the surprise.
 
+## Brand
+Noir and minimal: warm black, bone-white text, one yellow accent (the cat's eyes) and a touch of ribbon red.
+Headlines in Instrument Serif, everything else in Inter. The mark is a pair of glowing cat eyes that blink
+and follow the pointer.
+
 ## Sender flow
-1. Pick a game.
-2. Personalize: names, age, inside jokes (up to 3), photos (up to 3, optional prompt transform),
-   main voice note, optional creepy line, birthday message, optional lock date.
-3. Get a link, copy or share it, and preview it.
+A step-by-step creator, one question per screen, with a progress bar, Back, and Skip on optional steps:
+1. Which prank? (skipped when a game was picked on the home page)
+2. Who's the birthday? (name, optional age, your name)
+3. Photos (optional, up to 3; "Restyle" appears only when photo transforms are switched on)
+4. Your voice (one big mic button, "Hear it creepy" preview, optional creepy line)
+5. Inside jokes (optional, up to 3)
+6. Your message
+7. When should it open? Right away, or on their birthday (sealed with a countdown)
+
+Then: copy the link, share it (system share sheet or WhatsApp) or preview it.
 
 ## Receiver flow (shared skeleton)
 `gate` (tap unlocks sound) → `voice note` (normal, then cut off) → game-specific escalation →

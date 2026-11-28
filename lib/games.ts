@@ -8,6 +8,8 @@ export interface GameInfo {
   reveal: string;
   bestFor: string;
   available: boolean;
+  /** One short line for the game picker. */
+  pitch?: string;
   /** Shown on the create page for this game. */
   tip?: string;
   /** Title of the link preview the receiver sees (must not spoil the surprise). */
@@ -18,6 +20,7 @@ export interface GameInfo {
 export const GAMES: GameInfo[] = [
   {
     id: "gift-department",
+    pitch: "A gift that comes with very, very long terms and conditions.",
     title: "The Gift Department",
     emoji: "📦",
     trick:
@@ -31,6 +34,7 @@ export const GAMES: GameInfo[] = [
   },
   {
     id: "the-haunting",
+    pitch: "A ghost takes over their screen, and your voice comes back wrong.",
     title: "The Haunting",
     emoji: "🕯️",
     trick:
@@ -44,6 +48,7 @@ export const GAMES: GameInfo[] = [
   },
   {
     id: "secret-admirer",
+    pitch: "Mysterious love notes that get a little too intense.",
     title: "Secret Admirer",
     emoji: "💌",
     trick:

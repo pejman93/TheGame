@@ -4,6 +4,7 @@ import { AudioEngine } from "@/lib/client/audio-engine";
 import type { SurpriseConfig } from "@/lib/types";
 import type { Stage } from "@/games/types";
 import { SCRIPTS } from "@/games";
+import { Eyes } from "@/components/brand/Eyes";
 import { Gate } from "./stages/Gate";
 import { VoiceNote } from "./stages/VoiceNote";
 import { Chat } from "./stages/Chat";
@@ -172,16 +173,14 @@ function Sealed({ cfg, onOpen }: { cfg: SurpriseConfig; onOpen: () => void }) {
 
   return (
     <main className="player theme-sealed">
-      <div className="stage gate">
-        <div className="gate-icon" aria-hidden>
-          🔒
-        </div>
-        <div className="kicker">ACCESS DENIED</div>
-        <h1>This package is sealed, {cfg.recipientName}.</h1>
+      <div className="stage sealed">
+        <Eyes size={200} />
+        <div className="kicker">Sealed</div>
+        <h1 className="sealed-title">Not yet, {cfg.recipientName}.</h1>
         {left > 0 ? (
           <>
-            <p>It can only be opened at the right moment. Not a second earlier.</p>
-            <div className="countdown">
+            <p className="muted">Something is waiting for you. It opens at the right moment, not a second earlier.</p>
+            <div className="countdown" aria-live="off">
               {now === null ? (
                 "--:--:--"
               ) : (
@@ -191,13 +190,12 @@ function Sealed({ cfg, onOpen }: { cfg: SurpriseConfig; onOpen: () => void }) {
                 </>
               )}
             </div>
-            <p className="note">Come back when the timer hits zero.</p>
           </>
         ) : (
           <>
-            <p>The seal is broken. It&apos;s time.</p>
+            <p className="muted">It&apos;s time.</p>
             <button className="btn btn-primary btn-lg pulse" onClick={onOpen}>
-              Open the package
+              Open it
             </button>
           </>
         )}
